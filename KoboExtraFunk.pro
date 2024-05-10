@@ -1,5 +1,7 @@
 TARGET = KoboExtraFunk
-VERSION = 1.0.0
+
+# disable symlinks & versioning
+CONFIG += plugin
 
 include(../../../config.pri)
 
