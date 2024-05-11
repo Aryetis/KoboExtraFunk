@@ -1,7 +1,7 @@
 #ifndef KOBOPLATFORMADDITIONS_H
 #define KOBOPLATFORMADDITIONS_H
 
-#include "kobodevicedescriptor.h"
+#include "KoboDeviceExtraDescriptor.h"
 #include <QObject>
 
 class KoboPlatformAdditions : public QObject
@@ -9,7 +9,7 @@ class KoboPlatformAdditions : public QObject
     Q_OBJECT
 
 public:
-    KoboPlatformAdditions(QObject *parent, const KoboDeviceDescriptor &device);
+    KoboPlatformAdditions(QObject *parent, const KoboDeviceExtraDescriptor &descriptor);
 
     int getBatteryLevel() const;
     bool isBatteryCharging() const;
@@ -20,7 +20,7 @@ public:
 private:
     void setNaturalBrightness(int brig, int temp);
 
-    KoboDeviceDescriptor device;
+    KoboDeviceExtraDescriptor descriptor;
 };
 
 #endif  // KOBOPLATFORMADDITIONS_H

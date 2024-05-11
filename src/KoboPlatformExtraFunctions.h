@@ -3,7 +3,7 @@
 
 #include <QByteArray>
 #include <QtGui/QGuiApplication>
-
+#include "KoboDeviceExtraDescriptor.h"
 
 class KoboPlatformExtraFunctions
 {
@@ -74,19 +74,19 @@ public:
             func();
     }
 
-    typedef KoboDeviceDescriptor (*getKoboDeviceDescriptorType)();
-    static QByteArray getKoboDeviceDescriptorIdentifier()
+    typedef KoboDeviceExtraDescriptor (*getKoboDeviceExtraDescriptorType)();
+    static QByteArray getKoboDeviceExtraDescriptorIdentifier()
     {
         return QByteArrayLiteral("getKoboDeviceDescriptor");
     }
-    static KoboDeviceDescriptor getKoboDeviceDescriptor()
+    static KoboDeviceExtraDescriptor getKoboDeviceExtraDescriptor()
     {
-        auto func = reinterpret_cast<getKoboDeviceDescriptorType>(
-            QGuiApplication::platformFunction(getKoboDeviceDescriptorIdentifier()));
+        auto func = reinterpret_cast<getKoboDeviceExtraDescriptorType>(
+            QGuiApplication::platformFunction(getKoboDeviceExtraDescriptorIdentifier()));
         if (func)
             return func();
 
-        return KoboDeviceDescriptor();
+        return KoboDeviceExtraDescriptor();
     }
 };
 #endif // KOBOPLATFORMEXTRAFUNCTIONS_H
