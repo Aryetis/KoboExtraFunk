@@ -27,7 +27,7 @@ struct KoboDeviceExtraDescriptor
     FrontlightSettings frontlightSettings;
     // Standard sysfs path to the battery directory
     QString batterySysfs = "/sys/class/power_supply/mc13892_bat";
-    // Stable path to the NTX input device
+    // Stable path to the NTX input device (buttons)
     QString ntxDev = "/dev/input/event0";
     // Stable path to the Power Button input device
     QString powerDev = "null";

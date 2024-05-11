@@ -9,21 +9,26 @@ TEMPLATE = lib
 
 DEFINES += TEST_LIB\
 
-QT += \
+QT +=  widgets \
+    core-private gui-private \
+    service_support-private eventdispatcher_support-private input_support-private
 
 INCLUDEPATH += $$PWD/../qt5-kobo-platform-plugin/src \
 
 SOURCES = \
     src/KoboButtonIntegration.cpp \
     src/KoboDeviceExtraDescriptor.cpp \
-    src/KoboPlatformExtraFunctions.cpp \
     src/KoboWifiManager.cpp \
+    src/KoboPlatformExtraIntegration.cpp \
+    src/KoboPlatformAdditions.cpp \
 
 HEADERS = \
     src/KoboButtonIntegration.h \
     src/KoboDeviceExtraDescriptor.h \
     src/KoboPlatformExtraFunctions.h \
     src/KoboWifiManager.h \
+    src/KoboPlatformExtraIntegration.h \
+    src/KoboPlatformAdditions.h \
 
 
 OTHER_FILES += \

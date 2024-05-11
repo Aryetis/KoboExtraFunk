@@ -10,7 +10,6 @@ class KoboPlatformExtraFunctions
 public:
     typedef int (*getBatteryLevelType)();
     static QByteArray getBatteryLevelIdentifier() { return QByteArrayLiteral("getBatteryLevel"); }
-
     static int getBatteryLevel()
     {
         auto func = reinterpret_cast<getBatteryLevelType>(
@@ -23,7 +22,6 @@ public:
 
     typedef bool (*isBatteryChargingType)();
     static QByteArray isBatteryChargingIdentifier() { return QByteArrayLiteral("isBatteryCharging"); }
-
     static bool isBatteryCharging()
     {
         auto func = reinterpret_cast<isBatteryChargingType>(
@@ -36,7 +34,6 @@ public:
 
     typedef void (*setFrontlightLevelType)(int val, int temp);
     static QByteArray setFrontlightLevelIdentifier() { return QByteArrayLiteral("setFrontlightLevel"); }
-
     static void setFrontlightLevel(int val, int temp)
     {
         auto func = reinterpret_cast<setFrontlightLevelType>(
@@ -44,28 +41,9 @@ public:
         if (func)
             func(val, temp);
     }
-    typedef KoboDeviceDescriptor (*getKoboDeviceDescriptorType)();
-    static QByteArray getKoboDeviceDescriptorIdentifier()
-    {
-        return QByteArrayLiteral("getKoboDeviceDescriptor");
-    }
-
-    static KoboDeviceDescriptor getKoboDeviceDescriptor()
-    {
-        auto func = reinterpret_cast<getKoboDeviceDescriptorType>(
-            QGuiApplication::platformFunction(getKoboDeviceDescriptorIdentifier()));
-        if (func)
-            return func();
-
-        return KoboDeviceDescriptor();
-    }
 
     typedef bool (*testInternetConnectionType)(int timeout);
-    static QByteArray testInternetConnectionIdentifier()
-    {
-        return QByteArrayLiteral("testInternetConnection");
-    }
-
+    static QByteArray testInternetConnectionIdentifier() { return QByteArrayLiteral("testInternetConnection"); }
     static bool testInternetConnection(int timeout = 2)
     {
         auto func = reinterpret_cast<testInternetConnectionType>(
@@ -78,7 +56,6 @@ public:
 
     typedef void (*enableWiFiConnectionType)();
     static QByteArray enableWiFiConnectionIdentifier() { return QByteArrayLiteral("enableWiFiConnection"); }
-
     static void enableWiFiConnection()
     {
         auto func = reinterpret_cast<enableWiFiConnectionType>(
@@ -89,13 +66,27 @@ public:
 
     typedef void (*disableWiFiConnectionType)();
     static QByteArray disableWiFiConnectionIdentifier() { return QByteArrayLiteral("disableWiFiConnection"); }
-
     static void disableWiFiConnection()
     {
         auto func = reinterpret_cast<disableWiFiConnectionType>(
             QGuiApplication::platformFunction(disableWiFiConnectionIdentifier()));
         if (func)
             func();
+    }
+
+    typedef KoboDeviceDescriptor (*getKoboDeviceDescriptorType)();
+    static QByteArray getKoboDeviceDescriptorIdentifier()
+    {
+        return QByteArrayLiteral("getKoboDeviceDescriptor");
+    }
+    static KoboDeviceDescriptor getKoboDeviceDescriptor()
+    {
+        auto func = reinterpret_cast<getKoboDeviceDescriptorType>(
+            QGuiApplication::platformFunction(getKoboDeviceDescriptorIdentifier()));
+        if (func)
+            return func();
+
+        return KoboDeviceDescriptor();
     }
 };
 #endif // KOBOPLATFORMEXTRAFUNCTIONS_H

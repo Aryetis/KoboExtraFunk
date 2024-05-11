@@ -1,4 +1,4 @@
-#include "kobobuttonintegration.h"
+#include "KoboButtonIntegration.h"
 #include "einkenums.h"
 
 #define KEY_LIGHT 90

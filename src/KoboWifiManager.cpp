@@ -1,4 +1,4 @@
-#include "kobowifimanager.h"
+#include "KoboWifiManager.h"
 
 #include <QDebug>
 #include <QFile>
