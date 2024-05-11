@@ -6,31 +6,31 @@
 #include <qpa/qplatforminputcontextfactory_p.h>
 #include "KoboPlatformExtraFunctions.h"
 
-KoboPlatformIntegration::KoboPlatformIntegration(const QStringList &paramList) :
+KoboPlatformExtraIntegration::KoboPlatformExtraIntegration(const QStringList &paramList) :
     m_paramList(paramList),
     kbdMgr(nullptr),
     koboKeyboard(nullptr),
     koboAdditions(nullptr),
     debug(false)
 {
-    koboExtraDescriptor = determineDevice();
-}
-
-void KoboPlatformIntegration::initialize()
-{
+    // koboExtraDescriptor = determineDevice(); // TODO NOW
     createInputHandlers();
-
-    qWarning("kobofb: Finished initialization.");
 }
 
-QAbstractEventDispatcher *KoboPlatformIntegration::createEventDispatcher() const
-{
-    return createUnixEventDispatcher();
-}
+// void KoboPlatformExtraIntegration::initialize()
+// {
+//     createInputHandlers();
 
-void KoboPlatformIntegration::createInputHandlers()
-{
+//     qWarning("kobofb: Finished initialization.");
+// }
 
+// QAbstractEventDispatcher *KoboPlatformExtraIntegration::createEventDispatcher() const
+// {
+//     return createUnixEventDispatcher();
+// }
+
+void KoboPlatformExtraIntegration::createInputHandlers()
+{
     for (const QString &arg : qAsConst(m_paramList))
     {
         if (arg.contains("debug"))
@@ -40,16 +40,16 @@ void KoboPlatformIntegration::createInputHandlers()
         }
     }
 
-    koboKeyboard = new KoboButtonIntegration(this, koboExtraDescriptor.ntxDev, false);
+    koboKeyboard = new KoboButtonIntegration(this, koboExtraDescriptor.ntxDev, debug);
     koboAdditions = new KoboPlatformAdditions(this, koboExtraDescriptor);
 }
 
-KoboDeviceExtraDescriptor *KoboPlatformIntegration::deviceDescriptor()
+KoboDeviceExtraDescriptor *KoboPlatformExtraIntegration::deviceDescriptor()
 {
     return &koboExtraDescriptor;
 }
 
-QFunctionPointer KoboPlatformIntegration::platformFunction(const QByteArray &function) const
+QFunctionPointer KoboPlatformExtraIntegration::platformFunction(const QByteArray &function) const
 {
     if (function == KoboPlatformExtraFunctions::setFrontlightLevelIdentifier())
         return QFunctionPointer(setFrontlightLevelStatic);
@@ -69,58 +69,58 @@ QFunctionPointer KoboPlatformIntegration::platformFunction(const QByteArray &fun
     return 0;
 }
 
-void KoboPlatformIntegration::setFrontlightLevelStatic(int val, int temp)
+void KoboPlatformExtraIntegration::setFrontlightLevelStatic(int val, int temp)
 {
-    KoboPlatformIntegration *self =
-        static_cast<KoboPlatformIntegration *>(QGuiApplicationPrivate::platformIntegration());
+    KoboPlatformExtraIntegration *self =
+        static_cast<KoboPlatformExtraIntegration *>(QGuiApplicationPrivate::platformIntegration());
 
     self->koboAdditions->setFrontlightLevel(val, temp);
 }
 
-int KoboPlatformIntegration::getBatteryLevelStatic()
+int KoboPlatformExtraIntegration::getBatteryLevelStatic()
 {
-    KoboPlatformIntegration *self =
-        static_cast<KoboPlatformIntegration *>(QGuiApplicationPrivate::platformIntegration());
+    KoboPlatformExtraIntegration *self =
+        static_cast<KoboPlatformExtraIntegration *>(QGuiApplicationPrivate::platformIntegration());
 
     return self->koboAdditions->getBatteryLevel();
 }
 
-bool KoboPlatformIntegration::isBatteryChargingStatic()
+bool KoboPlatformExtraIntegration::isBatteryChargingStatic()
 {
-    KoboPlatformIntegration *self =
-        static_cast<KoboPlatformIntegration *>(QGuiApplicationPrivate::platformIntegration());
+    KoboPlatformExtraIntegration *self =
+        static_cast<KoboPlatformExtraIntegration *>(QGuiApplicationPrivate::platformIntegration());
 
     return self->koboAdditions->isBatteryCharging();
 }
 
-KoboDeviceExtraDescriptor KoboPlatformIntegration::getKoboDeviceExtraDescriptorStatic()
+KoboDeviceExtraDescriptor KoboPlatformExtraIntegration::getKoboDeviceExtraDescriptorStatic()
 {
-    KoboPlatformIntegration *self =
-        static_cast<KoboPlatformIntegration *>(QGuiApplicationPrivate::platformIntegration());
+    KoboPlatformExtraIntegration *self =
+        static_cast<KoboPlatformExtraIntegration *>(QGuiApplicationPrivate::platformIntegration());
 
     return *self->deviceDescriptor();
 }
 
-void KoboPlatformIntegration::enableWiFiConnectionStatic()
+void KoboPlatformExtraIntegration::enableWiFiConnectionStatic()
 {
-    KoboPlatformIntegration *self =
-        static_cast<KoboPlatformIntegration *>(QGuiApplicationPrivate::platformIntegration());
+    KoboPlatformExtraIntegration *self =
+        static_cast<KoboPlatformExtraIntegration *>(QGuiApplicationPrivate::platformIntegration());
 
     self->wifiManager.enableWiFiConnection();
 }
 
-void KoboPlatformIntegration::disableWiFiConnectionStatic()
+void KoboPlatformExtraIntegration::disableWiFiConnectionStatic()
 {
-    KoboPlatformIntegration *self =
-        static_cast<KoboPlatformIntegration *>(QGuiApplicationPrivate::platformIntegration());
+    KoboPlatformExtraIntegration *self =
+        static_cast<KoboPlatformExtraIntegration *>(QGuiApplicationPrivate::platformIntegration());
 
     self->wifiManager.disableWiFiConnection();
 }
 
-bool KoboPlatformIntegration::testInternetConnectionStatic(int timeout)
+bool KoboPlatformExtraIntegration::testInternetConnectionStatic(int timeout)
 {
-    KoboPlatformIntegration *self =
-        static_cast<KoboPlatformIntegration *>(QGuiApplicationPrivate::platformIntegration());
+    KoboPlatformExtraIntegration *self =
+        static_cast<KoboPlatformExtraIntegration *>(QGuiApplicationPrivate::platformIntegration());
 
     return self->wifiManager.testInternetConnection(timeout);
 }

@@ -13,15 +13,15 @@ class QAbstractEventDispatcher;
 class QFbVtHandler;
 class QEvdevKeyboardManager;
 
-class KoboPlatformIntegration : public QPlatformIntegration, public QPlatformNativeInterface
+class KoboPlatformExtraIntegration /*: public QPlatformIntegration, public QPlatformNativeInterface*/
 {
 public:
-    explicit KoboPlatformIntegration(const QStringList &paramList);
-    ~KoboPlatformIntegration() = default;
+    explicit KoboPlatformExtraIntegration(const QStringList &paramList);
+    ~KoboPlatformExtraIntegration() = default;
 
-    void initialize() override;
-    QAbstractEventDispatcher *createEventDispatcher() const override;
-    QFunctionPointer platformFunction(const QByteArray &function) const override;
+    // void initialize() override;
+    // QAbstractEventDispatcher *createEventDispatcher() const override;
+    // QFunctionPointer platformFunction(const QByteArray &function) const override;
     KoboDeviceExtraDescriptor *deviceDescriptor();
 
 private:

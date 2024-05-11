@@ -15,22 +15,20 @@ class KoboButtonIntegration : public QObject
     Q_OBJECT
 
 public:
-    KoboButtonIntegration(QObject* parent = nullptr, const QString& inputDevice = "/dev/input/event0",
-                          bool debug = false);
+    KoboButtonIntegration(QObject* parent = nullptr, const QString& inputDevice = "/dev/input/event0", bool debug = false);
     ~KoboButtonIntegration();
 
 private slots:
     void activity(int);
 
 private:
-    int inputHandle;
-    QSocketNotifier* socketNotifier;
-
-    bool debug;
-    bool isInputCaptured;
-
     void captureInput();
     void releaseInput();
+
+    int inputHandle;
+    QSocketNotifier* socketNotifier;
+    bool debug;
+    bool isInputCaptured;
 };
 
 #endif // KOBOBUTTONINTEGRATION_H
