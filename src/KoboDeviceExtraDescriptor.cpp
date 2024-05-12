@@ -1,53 +1,53 @@
 #include "KoboDeviceExtraDescriptor.h"
 
 // Kobo Touch A/B:
-KoboDeviceExtraDescriptor KoboTrilogyAB
+KoboDeviceExtraDescriptor KoboTrilogyABEx
 {
     .hasKeys = true,
     .frontlightSettings {.hasFrontLight = false},
 };
 
 // Kobo Touch C:
-KoboDeviceExtraDescriptor KoboTrilogyC
+KoboDeviceExtraDescriptor KoboTrilogyCEx
 {
     .hasKeys = true,
     .frontlightSettings {.hasFrontLight = false},
 };
 
 // Kobo Mini:
-KoboDeviceExtraDescriptor KoboPixie
+KoboDeviceExtraDescriptor KoboPixieEx
 {
     .frontlightSettings {.hasFrontLight = false},
 };
 
 // Kobo Glo:
-KoboDeviceExtraDescriptor KoboKraken {};
+KoboDeviceExtraDescriptor KoboKrakenEx {};
 
 // Kobo Glo HD:
-KoboDeviceExtraDescriptor KoboAlyssum {};
+KoboDeviceExtraDescriptor KoboAlyssumEx {};
 
 // Kobo Touch 2.0:
-KoboDeviceExtraDescriptor KoboPika
+KoboDeviceExtraDescriptor KoboPikaEx
 {
     .frontlightSettings {.hasFrontLight = false},
 };
 
 // Kobo Aura:
-KoboDeviceExtraDescriptor KoboPhoenix {};
+KoboDeviceExtraDescriptor KoboPhoenixEx {};
 
 // Kobo Aura HD:
-KoboDeviceExtraDescriptor KoboDragon {};
+KoboDeviceExtraDescriptor KoboDragonEx {};
 
 // Kobo Aura H2O:
-KoboDeviceExtraDescriptor KoboDahlia {};
+KoboDeviceExtraDescriptor KoboDahliaEx {};
 
 // Kobo Aura H2O2:
-KoboDeviceExtraDescriptor KoboSnow
+KoboDeviceExtraDescriptor KoboSnowEx
 {
     .frontlightSettings
     {
         .hasNaturalLight = true,
-            .frontlightDevWhite {"/sys/class/backlight/lm3630a_ledb"},
+        .frontlightDevWhite {"/sys/class/backlight/lm3630a_ledb"},
         .frontlightDevRed {"/sys/class/backlight/lm3630a_led"},
         .frontlightDevGreen {"/sys/class/backlight/lm3630a_leda"},
     },
@@ -55,7 +55,7 @@ KoboDeviceExtraDescriptor KoboSnow
 
 // Kobo Aura H2O2, Rev2:
 //- @fixme Check if the Clara fix actually helps here... (#4015)
-KoboDeviceExtraDescriptor KoboSnowRev2
+KoboDeviceExtraDescriptor KoboSnowRev2Ex
 {
     .frontlightSettings
     {
@@ -66,7 +66,7 @@ KoboDeviceExtraDescriptor KoboSnowRev2
 };
 
 // Kobo Aura One:
-KoboDeviceExtraDescriptor KoboDaylight
+KoboDeviceExtraDescriptor KoboDaylightEx
 {
     .frontlightSettings
     {
@@ -78,13 +78,13 @@ KoboDeviceExtraDescriptor KoboDaylight
 };
 
 // Kobo Aura second edition:
-KoboDeviceExtraDescriptor KoboStar {};
+KoboDeviceExtraDescriptor KoboStarEx {};
 
 // Kobo Aura second edition, Rev 2:
-KoboDeviceExtraDescriptor KoboStarRev2 {};
+KoboDeviceExtraDescriptor KoboStarRev2Ex {};
 
 // Kobo Clara HD:
-KoboDeviceExtraDescriptor KoboNova
+KoboDeviceExtraDescriptor KoboNovaEx
 {
     .canToggleChargingLED = true,
     .frontlightSettings
@@ -94,7 +94,6 @@ KoboDeviceExtraDescriptor KoboNova
         .naturalLightInverted = true,
         .naturalLightMin = 0,
         .naturalLightMax = 10,
-        .frontlightDevWhite {"/sys/class/backlight/mxc_msp430.0/brightness"},
         .frontlightDevMixer {"/sys/class/backlight/lm3630a_led/color"},
     },
 };
@@ -108,7 +107,7 @@ KoboDeviceExtraDescriptor KoboNova
 //       i.e., this will affect KSM users.
 //       c.f., https://github.com/koreader/koreader/pull/4414#issuecomment-449652335
 //       There's also a CM_ROTARY_ENABLE command, but which seems to do as much nothing as the STATUS one...
-KoboDeviceExtraDescriptor KoboFrost
+KoboDeviceExtraDescriptor KoboFrostEx
 {
     .hasKeys = true,
     .canToggleChargingLED = true,
@@ -121,14 +120,13 @@ KoboDeviceExtraDescriptor KoboFrost
         .naturalLightInverted = true,
         .naturalLightMin = 0,
         .naturalLightMax = 10,
-        .frontlightDevWhite {"/sys/class/backlight/mxc_msp430.0/brightness"},
         .frontlightDevMixer {"/sys/class/backlight/tlc5947_bl/color"},
     },
 };
 
 // Kobo Libra:
 // NOTE: Assume the same quirks as the Forma apply.
-KoboDeviceExtraDescriptor KoboStorm
+KoboDeviceExtraDescriptor KoboStormEx
 {
     .hasKeys = true,
     .canToggleChargingLED = true,
@@ -139,26 +137,25 @@ KoboDeviceExtraDescriptor KoboStorm
         .naturalLightInverted = true,
         .naturalLightMin = 0,
         .naturalLightMax = 10,
-        .frontlightDevWhite {"/sys/class/backlight/mxc_msp430.0/brightness"},
         .frontlightDevMixer {"/sys/class/backlight/lm3630a_led/color"},
     },
 };
 
 // Kobo Nia:
-KoboDeviceExtraDescriptor KoboLuna
+KoboDeviceExtraDescriptor KoboLunaEx
 {
     .canToggleChargingLED = true,
 };
 
 // Kobo Elipsa
-KoboDeviceExtraDescriptor KoboEuropa
+KoboDeviceExtraDescriptor KoboEuropaEx
 {
     .canToggleChargingLED = true,
     .batterySysfs {"/sys/class/power_supply/battery"},
 };
 
 // Kobo Sage
-KoboDeviceExtraDescriptor KoboCadmus
+KoboDeviceExtraDescriptor KoboCadmusEx
 {
     .canToggleChargingLED = true,
     .frontlightSettings
@@ -168,14 +165,13 @@ KoboDeviceExtraDescriptor KoboCadmus
         .naturalLightInverted = false,
         .naturalLightMin = 0,
         .naturalLightMax = 10,
-        .frontlightDevWhite {"/sys/class/backlight/mxc_msp430.0/brightness"},
         .frontlightDevMixer {"/sys/class/leds/aw99703-bl_FL1/color"},
     },
     .batterySysfs {"/sys/class/power_supply/battery"},
 };
 
 // Kobo Libra 2
-KoboDeviceExtraDescriptor KoboIo
+KoboDeviceExtraDescriptor KoboIoEx
 {
     .canToggleChargingLED = true,
     .frontlightSettings
@@ -185,14 +181,13 @@ KoboDeviceExtraDescriptor KoboIo
         .naturalLightInverted = true,
         .naturalLightMin = 0,
         .naturalLightMax = 10,
-        .frontlightDevWhite {"/sys/class/backlight/mxc_msp430.0/brightness"},
         .frontlightDevMixer {"/sys/class/leds/aw99703-bl_FL1/color"},
     },
     .batterySysfs = "/sys/class/power_supply/battery",
 };
 
 // Kobo Clara 2E
-KoboDeviceExtraDescriptor KoboGoldfinch
+KoboDeviceExtraDescriptor KoboGoldfinchEx
 {
     .frontlightSettings
     {
@@ -201,9 +196,64 @@ KoboDeviceExtraDescriptor KoboGoldfinch
         .naturalLightInverted = true,
         .naturalLightMin = 0,
         .naturalLightMax = 10,
-        .frontlightDevWhite {"/sys/class/backlight/mxc_msp430.0/brightness"},
         .frontlightDevMixer {"/sys/class/leds/aw99703-bl_FL1/color"},
     },
     .batterySysfs {"/sys/class/power_supply/battery"},
-    .powerDev {"/dev/input/by-path/platform-bd71828-pwrkey-event"},
+    .powerDev {"/dev/input/by-path/platform-bd71828-pwrkey-event"}, // TODO NOW : useless ?
 };
+
+// Kobo Libra Colour
+KoboDeviceExtraDescriptor KoboMonzaEx
+{
+    .hasKeys = true,
+    .frontlightSettings
+    {
+        .hasNaturalLight = true,
+        .hasNaturalLightMixer = true,
+        .naturalLightInverted = true,
+        .naturalLightMin = 0,
+        .naturalLightMax = 10,
+    },
+    .batterySysfs {"/sys/class/power_supply/bd71827_bat"},
+};
+
+KoboDeviceExtraDescriptor KoboUnknownEx {};
+
+namespace
+{
+    std::map<KoboDevice, KoboDeviceExtraDescriptor> extraMap
+    {
+        {KoboDevice::KoboTouchAB, KoboTrilogyABEx},
+        {KoboDevice::KoboTouchC, KoboTrilogyCEx},
+        {KoboDevice::KoboMini, KoboPixieEx},
+        {KoboDevice::KoboGlo, KoboKrakenEx},
+        {KoboDevice::KoboGloHD, KoboAlyssumEx},
+        {KoboDevice::KoboTouch2, KoboPikaEx},
+        {KoboDevice::KoboAura, KoboPhoenixEx},
+        {KoboDevice::KoboAuraHD, KoboDragonEx},
+        {KoboDevice::KoboAuraH2O, KoboDahliaEx},
+        {KoboDevice::KoboAuraH2O2_v1, KoboSnowEx},
+        {KoboDevice::KoboAuraH2O2_v2, KoboSnowRev2Ex},
+        {KoboDevice::KoboAuraOne, KoboDaylightEx},
+        {KoboDevice::KoboAura2, KoboStarEx},
+        {KoboDevice::KoboAura2_v2, KoboStarRev2Ex},
+        {KoboDevice::KoboClaraHD, KoboNovaEx},
+        {KoboDevice::KoboForma, KoboFrostEx},
+        {KoboDevice::KoboLibraH2O, KoboStormEx},
+        {KoboDevice::KoboNia, KoboLunaEx},
+        {KoboDevice::KoboElipsa, KoboEuropaEx},
+        {KoboDevice::KoboSage, KoboCadmusEx},
+        {KoboDevice::KoboLibra2, KoboIoEx},
+        {KoboDevice::KoboClara2E, KoboGoldfinchEx},
+        {KoboDevice::KoboLibraColour, KoboMonzaEx},
+        {KoboDevice::Unknown, KoboUnknownEx}
+    };
+}
+
+KoboDeviceExtraDescriptor const* DetermineExtraDescriptor(KoboDeviceDescriptor const& koboDesc)
+{
+    if (extraMap.find(koboDesc.device) != extraMap.end())
+        return &extraMap[koboDesc.device];
+    else
+        return &KoboUnknownEx;
+}

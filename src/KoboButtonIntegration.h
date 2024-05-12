@@ -6,7 +6,6 @@
 #include <qevent.h>
 #include <qguiapplication.h>
 #include <unistd.h>
-
 #include <QDebug>
 #include <QSocketNotifier>
 
@@ -22,8 +21,8 @@ private slots:
     void activity(int);
 
 private:
-    void captureInput();
-    void releaseInput();
+    void CaptureInput();
+    void ReleaseInput();
 
     int inputHandle;
     QSocketNotifier* socketNotifier;

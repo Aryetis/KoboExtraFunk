@@ -2,6 +2,7 @@
 #define KOBODEVICEEXTRADESCRIPTOR_H
 
 #include <QString>
+#include "kobodevicedescriptor.h"
 
 struct FrontlightSettings
 {
@@ -32,5 +33,7 @@ struct KoboDeviceExtraDescriptor
     // Stable path to the Power Button input device
     QString powerDev = "null";
 };
+
+KoboDeviceExtraDescriptor const* DetermineExtraDescriptor(KoboDeviceDescriptor const& koboDesc);
 
 #endif // KOBODEVICEEXTRADESCRIPTOR_H

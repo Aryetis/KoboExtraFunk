@@ -72,56 +72,56 @@ static int ntx_io_read(int port)
 }
 
 KoboPlatformAdditions::KoboPlatformAdditions(QObject* parent, const KoboDeviceExtraDescriptor& descriptor_)
-    : QObject(parent), descriptor(descriptor_)
+    : QObject(parent), extraDescriptor(descriptor_)
+{ }
+
+int KoboPlatformAdditions::GetBatteryLevel() const
 {
+    return int_from_file(extraDescriptor.batterySysfs + "/capacity");
 }
 
-int KoboPlatformAdditions::getBatteryLevel() const
+bool KoboPlatformAdditions::IsBatteryCharging() const
 {
-    return int_from_file(descriptor.batterySysfs + "/capacity");
+    return str_from_file(extraDescriptor.batterySysfs + "/status") == "Charging";
 }
 
-bool KoboPlatformAdditions::isBatteryCharging() const
-{
-    return str_from_file(descriptor.batterySysfs + "/status") == "Charging";
-}
-
-bool KoboPlatformAdditions::isUsbConnected() const
+bool KoboPlatformAdditions::IsUsbConnected() const
 {
     return ntx_io_read(108) == 1;
 }
 
-void KoboPlatformAdditions::setStatusLedEnabled(bool enabled)
+void KoboPlatformAdditions::SetStatusLedEnabled(bool enabled)
 {
     ntx_io_write(101, enabled ? 1 : 0);
 }
 
-void KoboPlatformAdditions::setFrontlightLevel(int val, int temp)
+void KoboPlatformAdditions::SetFrontlightLevel(int val, int temp)
 {
-    if (!descriptor.frontlightSettings.hasFrontLight)
+    if (!extraDescriptor.frontlightSettings.hasFrontLight)
         return;
 
-    val = qMax(descriptor.frontlightSettings.frontlightMin, qMin(val, descriptor.frontlightSettings.frontlightMax));
-    temp = qMax(descriptor.frontlightSettings.naturalLightMin,
-                qMin(temp, descriptor.frontlightSettings.naturalLightMax));
-    if (descriptor.frontlightSettings.hasNaturalLight)
-    {
-        setNaturalBrightness(val, temp);
-    }
+    val = qMax(extraDescriptor.frontlightSettings.frontlightMin, qMin(val, extraDescriptor.frontlightSettings.frontlightMax));
+    temp = qMax(extraDescriptor.frontlightSettings.naturalLightMin,
+                qMin(temp, extraDescriptor.frontlightSettings.naturalLightMax));
+    if (extraDescriptor.frontlightSettings.hasNaturalLight)
+        SetNaturalBrightness(val, temp);
     else
-    {
         ntx_io_write(241, val);
-    }
 }
 
-void KoboPlatformAdditions::setNaturalBrightness(int brig, int temp)
+void KoboPlatformAdditions::SetNaturalBrightness(int brig, int temp)
 {
-    QString fWhite = descriptor.frontlightSettings.frontlightDevWhite,
-        fRed = descriptor.frontlightSettings.frontlightDevRed,
-        fGreen = descriptor.frontlightSettings.frontlightDevGreen,
-        fMixer = descriptor.frontlightSettings.frontlightDevMixer;
+    QString fWhite = extraDescriptor.frontlightSettings.frontlightDevWhite,
+        fRed = extraDescriptor.frontlightSettings.frontlightDevRed,
+        fGreen = extraDescriptor.frontlightSettings.frontlightDevGreen,
+        fMixer = extraDescriptor.frontlightSettings.frontlightDevMixer;
 
-    if (descriptor.frontlightSettings.hasNaturalLightMixer)
+    if (extraDescriptor.frontlightSettings.naturalLightInverted)
+    {
+        temp = extraDescriptor.frontlightSettings.naturalLightMax - temp;
+    }
+
+    if (extraDescriptor.frontlightSettings.hasNaturalLightMixer)
     {
         if (fWhite != "")
             write_light_value(fWhite, brig);
@@ -141,7 +141,7 @@ void KoboPlatformAdditions::setNaturalBrightness(int brig, int temp)
         if (brig > 0)
         {
             white = std::min(white_gain * pow(brig, exponent) *
-                                     pow(descriptor.frontlightSettings.naturalLightMax - temp, exponent) +
+                                     pow(extraDescriptor.frontlightSettings.naturalLightMax - temp, exponent) +
                                  white_offset,
                              255.0);
         }

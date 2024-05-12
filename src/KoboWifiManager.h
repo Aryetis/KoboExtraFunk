@@ -4,21 +4,20 @@
 #include <QProcess>
 #include <QSharedPointer>
 
-class KoboWifiManager
+class KoboWifiManager : public QObject
 {
+    Q_OBJECT
 public:
     KoboWifiManager();
     ~KoboWifiManager();
 
-    bool testInternetConnection(int timeout);
-
-    void enableWiFiConnection();
-    void disableWiFiConnection();
-
-    void stopProcess();
+    bool TestInternetConnection(int timeout);
+    void EnableWiFiConnection();
+    void DisableWiFiConnection();
+    void StopProcess();
 
 private:
-    void executeShell(const char* command);
+    void ExecuteShell(const char* command);
 
     QSharedPointer<QProcess> process;
 };

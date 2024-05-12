@@ -11,16 +11,16 @@ class KoboPlatformAdditions : public QObject
 public:
     KoboPlatformAdditions(QObject *parent, const KoboDeviceExtraDescriptor &descriptor);
 
-    int getBatteryLevel() const;
-    bool isBatteryCharging() const;
-    bool isUsbConnected() const;
-    void setStatusLedEnabled(bool enabled);
-    void setFrontlightLevel(int val, int temp);
+    int GetBatteryLevel() const;
+    bool IsBatteryCharging() const;
+    bool IsUsbConnected() const;
+    void SetStatusLedEnabled(bool enabled);
+    void SetFrontlightLevel(int val, int temp);
 
 private:
-    void setNaturalBrightness(int brig, int temp);
+    void SetNaturalBrightness(int brig, int temp);
 
-    KoboDeviceExtraDescriptor descriptor;
+    KoboDeviceExtraDescriptor extraDescriptor;
 };
 
 #endif  // KOBOPLATFORMADDITIONS_H

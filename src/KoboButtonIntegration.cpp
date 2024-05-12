@@ -26,17 +26,17 @@ KoboButtonIntegration::KoboButtonIntegration(QObject *parent, const QString &inp
 
     socketNotifier->setEnabled(true);
 
-    captureInput();
+    CaptureInput();
 }
 
 KoboButtonIntegration::~KoboButtonIntegration()
 {
-    releaseInput();
+    ReleaseInput();
     delete socketNotifier;
     close(inputHandle);
 }
 
-void KoboButtonIntegration::captureInput()
+void KoboButtonIntegration::CaptureInput()
 {
     if (isInputCaptured || inputHandle == -1)
         return;
@@ -52,7 +52,7 @@ void KoboButtonIntegration::captureInput()
         qDebug() << "KoboKb: Capture keyboard input error:" << res;
 }
 
-void KoboButtonIntegration::releaseInput()
+void KoboButtonIntegration::ReleaseInput()
 {
     if (!isInputCaptured || inputHandle == -1)
         return;

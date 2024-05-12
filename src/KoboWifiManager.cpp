@@ -12,11 +12,11 @@ KoboWifiManager::~KoboWifiManager()
     if (process)
     {
         process->disconnect();
-        stopProcess();
+        StopProcess();
     }
 }
 
-void KoboWifiManager::executeShell(const char* command)
+void KoboWifiManager::ExecuteShell(const char* command)
 {
     if (!process)
     {
@@ -28,7 +28,7 @@ void KoboWifiManager::executeShell(const char* command)
                          [&]() { qDebug() << process->readAllStandardError(); });
     }
 
-    stopProcess();
+    StopProcess();
     process->start("/bin/sh", {}, QProcess::ReadWrite);
     process->waitForStarted();
 
@@ -37,36 +37,36 @@ void KoboWifiManager::executeShell(const char* command)
     process->waitForFinished();
 }
 
-void KoboWifiManager::stopProcess()
+void KoboWifiManager::StopProcess()
 {
     if (process)
         if (process->state() != QProcess::NotRunning)
             process->close();
 }
 
-bool KoboWifiManager::testInternetConnection(int timeout)
+bool KoboWifiManager::TestInternetConnection(int timeout)
 {
     QString cmd = QString("ping -c 1 -q -W %1 1.1.1.1 2>&1 >/dev/null").arg(timeout);
     int res = system(cmd.toLocal8Bit());
     return res == 0;
 }
 
-void KoboWifiManager::enableWiFiConnection()
+void KoboWifiManager::EnableWiFiConnection()
 {
     QFile restoreWifiFile(":/scripts/restore-wifi.sh");
     restoreWifiFile.open(QIODevice::ReadOnly);
     QByteArray restoreWifiScript = restoreWifiFile.readAll();
     restoreWifiFile.close();
 
-    executeShell(restoreWifiScript.data());
+    ExecuteShell(restoreWifiScript.data());
 }
 
-void KoboWifiManager::disableWiFiConnection()
+void KoboWifiManager::DisableWiFiConnection()
 {
     QFile disableWifiFile(":/scripts/disable-wifi.sh");
     disableWifiFile.open(QIODevice::ReadOnly);
     QByteArray disableWifiScript = disableWifiFile.readAll();
     disableWifiFile.close();
 
-    executeShell(disableWifiScript.data());
+    ExecuteShell(disableWifiScript.data());
 }
