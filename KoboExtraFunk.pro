@@ -1,6 +1,6 @@
 #-------------------------------------------------
-# WORKING ON : - Restoring ButtonIntegration
-#              - Fixing WifiManager / replacing it with a proper method
+# WORKING ON : - Fixing WifiManager / replacing it with a proper method cf QNDB :
+#                   https://github.com/shermp/NickelDBus/blob/ab7ac0c7fee308b776a1359bb90898a21edfb54d/src/ndb/NDBDbus.h#L109C12-L109C21
 #              - Cleaning a bunch of stuff
 #-------------------------------------------------
 

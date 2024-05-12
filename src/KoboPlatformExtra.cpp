@@ -20,7 +20,7 @@ KoboPlatformExtra::KoboPlatformExtra() :
     koboDescriptor = KoboPlatformFunctions::getKoboDeviceDescriptor();
     koboExtraDescriptor = DetermineExtraDescriptor(koboDescriptor);
     koboAdditions = new KoboPlatformAdditions(this, *koboExtraDescriptor);
-    // koboKeyboard = new KoboButtonIntegration(this, koboExtraDescriptor->ntxDev, Instance().debug); // TODO NOW fix this
+    koboKeyboard = new KoboButtonIntegration(this, koboExtraDescriptor->ntxDev, debug);
 }
 
 void KoboPlatformExtra::SetFrontlightLevelStatic(int val, int temp)
