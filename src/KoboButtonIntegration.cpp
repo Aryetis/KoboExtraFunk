@@ -1,13 +1,6 @@
 #include "KoboButtonIntegration.h"
 #include "einkenums.h"
 
-#define KEY_LIGHT 90
-#define KEY_HOME 102
-#define KEY_POWER 116
-#define KEY_SLEEP_COVER 59
-#define KEY_PAGE_UP 193
-#define KEY_PAGE_DOWN 194
-
 #define EVENT_REPEAT 2
 #define EVENT_PRESS 1
 #define EVENT_RELEASE 0
@@ -71,13 +64,14 @@ void KoboButtonIntegration::activity(int)
 
     KoboKey code;
 
-    if (KoboPhysicalKeyMap.contains(in.code) && !(in.code == KEY_SLEEP_COVER && in.value == EVENT_REPEAT))
+    if (KoboPhysicalKeyMap.contains(in.code))
     {
         code = KoboPhysicalKeyMap[in.code];
 
         QEvent::Type eventType = in.value == EVENT_PRESS ? QEvent::KeyPress : QEvent::KeyRelease;
 
-        QKeyEvent keyEvent(eventType, code, Qt::NoModifier);
+        // EVENT_REPEAT is here to distinguish (using p_keyPressEvent->isAutoRepeat()) proper inputs and sleepcover spam
+        QKeyEvent keyEvent(eventType, code, Qt::NoModifier, {}, in.value == EVENT_REPEAT);
 
         QObject *focusObject = qGuiApp->focusObject();
         if (focusObject)
