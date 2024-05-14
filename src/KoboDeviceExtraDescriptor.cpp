@@ -199,7 +199,7 @@ KoboDeviceExtraDescriptor KoboGoldfinchEx
         .frontlightDevMixer {"/sys/class/leds/aw99703-bl_FL1/color"},
     },
     .batterySysfs {"/sys/class/power_supply/battery"},
-    .powerDev {"/dev/input/by-path/platform-bd71828-pwrkey-event"}, // TODO NOW : useless ?
+    .powerDev {"/dev/input/by-path/platform-bd71828-pwrkey-event"},
 };
 
 // Kobo Libra Colour
@@ -215,6 +215,7 @@ KoboDeviceExtraDescriptor KoboMonzaEx
         .naturalLightMax = 10,
     },
     .batterySysfs {"/sys/class/power_supply/bd71827_bat"},
+    .powerDev {"/dev/input/by-path/platform-bd71828-pwrkey.6.auto-event"},
 };
 
 KoboDeviceExtraDescriptor KoboUnknownEx {};

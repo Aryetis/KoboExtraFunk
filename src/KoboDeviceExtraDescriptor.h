@@ -31,7 +31,7 @@ struct KoboDeviceExtraDescriptor
     // Stable path to the NTX input device (buttons)
     QString ntxDev = "/dev/input/event0";
     // Stable path to the Power Button input device
-    QString powerDev = "null";
+    QString powerDev = "";
 };
 
 KoboDeviceExtraDescriptor const* DetermineExtraDescriptor(KoboDeviceDescriptor const& koboDesc);

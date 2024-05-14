@@ -11,6 +11,7 @@ KoboPlatformExtra::KoboPlatformExtra() :
     koboExtraDescriptor(nullptr),
     kbdMgr(nullptr),
     koboKeyboard(nullptr),
+    koboPwrButton(nullptr),
     koboAdditions(nullptr),
     debug(false)
 {
@@ -21,6 +22,8 @@ KoboPlatformExtra::KoboPlatformExtra() :
     koboExtraDescriptor = DetermineExtraDescriptor(koboDescriptor);
     koboAdditions = new KoboPlatformAdditions(this, *koboExtraDescriptor);
     koboKeyboard = new KoboButtonIntegration(this, koboExtraDescriptor->ntxDev, debug);
+    if (koboExtraDescriptor->powerDev != "")
+        koboPwrButton = new KoboButtonIntegration(this, koboExtraDescriptor->powerDev, debug);
 }
 
 void KoboPlatformExtra::SetFrontlightLevelStatic(int val, int temp)

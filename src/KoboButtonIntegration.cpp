@@ -19,13 +19,9 @@ KoboButtonIntegration::KoboButtonIntegration(QObject *parent, const QString &inp
     : QObject(parent), debug(debug), isInputCaptured(false)
 {
     inputHandle = open(inputDevice.toStdString().c_str(), O_RDONLY);
-
     socketNotifier = new QSocketNotifier(inputHandle, QSocketNotifier::Read);
-
     connect(socketNotifier, &QSocketNotifier::activated, this, &KoboButtonIntegration::activity);
-
     socketNotifier->setEnabled(true);
-
     CaptureInput();
 }
 

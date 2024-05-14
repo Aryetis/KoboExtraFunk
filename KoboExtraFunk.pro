@@ -42,3 +42,6 @@ OTHER_FILES += \
 
 target.path =/mnt/onboard/.adds/$${PROJECT_APP_NAME}/lib/
 INSTALLS += target
+
+RESOURCES += \
+    Ressources.qrc

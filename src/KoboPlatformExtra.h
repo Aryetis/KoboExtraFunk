@@ -34,7 +34,7 @@ private:
     KoboDeviceExtraDescriptor const* koboExtraDescriptor;
     KoboWifiManager wifiManager;
     QEvdevKeyboardManager *kbdMgr;
-    KoboButtonIntegration *koboKeyboard;
+    KoboButtonIntegration *koboKeyboard, *koboPwrButton;
     KoboPlatformAdditions *koboAdditions;
     bool debug;
 };
