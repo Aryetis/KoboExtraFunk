@@ -37,8 +37,7 @@ HEADERS = \
     src/KoboPlatformAdditions.h \
 
 OTHER_FILES += \
-    scripts/disable-wifi.sh \
-    scripts/restore-wifi.sh \
+    scripts/*.sh \
 
 target.path =/mnt/onboard/.adds/$${PROJECT_APP_NAME}/lib/
 INSTALLS += target

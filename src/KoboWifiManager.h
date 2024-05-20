@@ -12,11 +12,12 @@ public:
     ~KoboWifiManager();
 
     bool TestInternetConnection(int timeout);
-    void EnableWiFiConnection();
+    void EnableWiFiConnection(bool obtainIp = true);
     void DisableWiFiConnection();
     void StopProcess();
 
 private:
+    void RunScript(QString scriptPath);
     void ExecuteShell(const char* command);
 
     QSharedPointer<QProcess> process;

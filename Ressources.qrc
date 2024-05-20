@@ -2,6 +2,7 @@
     <qresource prefix="/resources"/>
     <qresource prefix="/">
         <file>scripts/disable-wifi.sh</file>
-        <file>scripts/restore-wifi.sh</file>
+        <file>scripts/enable-wifi.sh</file>
+        <file>scripts/obtain-ip.sh</file>
     </qresource>
 </RCC>

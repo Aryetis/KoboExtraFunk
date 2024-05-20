@@ -51,22 +51,24 @@ bool KoboWifiManager::TestInternetConnection(int timeout)
     return res == 0;
 }
 
-void KoboWifiManager::EnableWiFiConnection()
+void KoboWifiManager::RunScript(QString scriptPath)
 {
-    QFile restoreWifiFile(":/scripts/restore-wifi.sh");
-    restoreWifiFile.open(QIODevice::ReadOnly);
-    QByteArray restoreWifiScript = restoreWifiFile.readAll();
-    restoreWifiFile.close();
+    QFile scriptFile(scriptPath);
+    scriptFile.open(QIODevice::ReadOnly);
+    QByteArray script = scriptFile.readAll();
+    scriptFile.close();
 
-    ExecuteShell(restoreWifiScript.data());
+    ExecuteShell(script.data());
+}
+
+void KoboWifiManager::EnableWiFiConnection(bool obtainIp /*= true*/)
+{
+    RunScript(":/scripts/enable-wifi.sh");
+    if (obtainIp)
+        RunScript(":/scripts/obtain-ip.sh");
 }
 
 void KoboWifiManager::DisableWiFiConnection()
 {
-    QFile disableWifiFile(":/scripts/disable-wifi.sh");
-    disableWifiFile.open(QIODevice::ReadOnly);
-    QByteArray disableWifiScript = disableWifiFile.readAll();
-    disableWifiFile.close();
-
-    ExecuteShell(disableWifiScript.data());
+    RunScript(":/scripts/disable-wifi.sh");
 }

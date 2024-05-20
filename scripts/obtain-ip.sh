@@ -45,12 +45,26 @@ else
 fi
 
 ###############################################################################################################
-# Below code, copy pasted from https://github.com/koreader/koreader/blob/master/platform/kobo/disable-wifi.sh #
+# Below code, copy pasted from https://github.com/koreader/koreader/blob/master/platform/kobo/obtain-ip.sh    #
 # credits to Niluje and koreader's team                                                                       #
-# replacing luajit calls by ioctl /dev/ntx_io 208                                                             #
 ###############################################################################################################
 
-# Disable wifi, and remove all modules.
+# NOTE: Close any non-standard fds, so that it doesn't come back to bite us in the ass with USBMS later...
+for fd in /proc/"$$"/fd/*; do
+    fd_id="$(basename "${fd}")"
+    if [ -e "${fd}" ] && [ "${fd_id}" -gt 2 ]; then
+        # NOTE: dash (meaning, in turn, busybox's ash, uses fd 10+ open to /dev/tty or $0 (w/ CLOEXEC))
+        fd_path="$(readlink -f "${fd}")"
+        if [ "${fd_path}" != "/dev/tty" ] && [ "${fd_path}" != "$(readlink -f "${0}")" ] && [ "${fd}" != "${fd_path}" ]; then
+            eval "exec ${fd_id}>&-"
+            echo "[obtain-ip.sh] Closed fd ${fd_id} -> ${fd_path}"
+        fi
+    fi
+done
+
+#./release-ip.sh, guess what, credits to Niluje and koreader's team, https://github.com/koreader/koreader/blob/master/platform/kobo/release-ip.sh
+###############################################################################################################
+# Release IP and shutdown udhcpc.
 # NOTE: Save our resolv.conf to avoid ending up with an empty one, in case the DHCP client wipes it on release (#6424).
 cp -a "/etc/resolv.conf" "/tmp/resolv.ko"
 old_hash="$(md5sum "/etc/resolv.conf" | cut -f1 -d' ')"
@@ -60,6 +74,7 @@ if [ -x "/sbin/dhcpcd" ]; then
     killall -q -TERM udhcpc default.script
 else
     killall -q -TERM udhcpc default.script dhcpcd
+    ifconfig "${INTERFACE}" 0.0.0.0
 fi
 
 # NOTE: dhcpcd -k waits for the signalled process to die, but busybox's killall doesn't have a -w, --wait flag,
@@ -82,79 +97,12 @@ if [ "${new_hash}" != "${old_hash}" ]; then
 else
     rm -f "/tmp/resolv.ko"
 fi
+###############################################################################################################
 
-wpa_cli -i "${INTERFACE}" terminate
-
-[ "${WIFI_MODULE}" = "dhd" ] && wlarm_le -i "${INTERFACE}" down
-ifconfig "${INTERFACE}" down
-
-# Handle dependencies, if any
-WIFI_DEP_MOD=""
-# Honor the platform's preferred method to toggle power
-POWER_TOGGLE="module"
-# Some platforms never unload the wifi modules
-SKIP_UNLOAD=""
-case "${WIFI_MODULE}" in
-    "moal")
-        WIFI_DEP_MOD="mlan"
-        POWER_TOGGLE="ntx_io"
-        ;;
-    "wlan_drv_gen4m")
-        POWER_TOGGLE="wmt"
-        SKIP_UNLOAD="true"
-        ;;
-esac
-
-if [ -z "${SKIP_UNLOAD}" ]; then
-    # Some sleep in between may avoid system getting hung
-    # (we test if a module is actually loaded to avoid unneeded sleeps)
-    if grep -q "^${WIFI_MODULE} " "/proc/modules"; then
-        usleep 250000
-        # NOTE: Kobo's busybox build is weird. rmmod appears to be modprobe in disguise, defaulting to the -r flag...
-        #       But since there's currently no modules.dep file being shipped, nor do they include the depmod applet,
-        #       go with what the FW is doing, which is rmmod.
-        # c.f., #2394?
-        rmmod "${WIFI_MODULE}"
-    fi
-
-    if [ -n "${WIFI_DEP_MOD}" ]; then
-        if grep -q "^${WIFI_DEP_MOD} " "/proc/modules"; then
-            usleep 250000
-            rmmod "${WIFI_DEP_MOD}"
-        fi
-    fi
+# NOTE: Prefer dhcpcd over udhcpc if available. That's what Nickel uses,
+#       and udhcpc appears to trip some insanely wonky corner cases on current FW (#6421)
+if [ -x "/sbin/dhcpcd" ]; then
+    dhcpcd -d -t 30 -w "${INTERFACE}"
+else
+    udhcpc -S -i "${INTERFACE}" -s /etc/udhcpc.d/default.script -b -q
 fi
-
-case "${POWER_TOGGLE}" in
-    "ntx_io")
-        usleep 250000
-        ioctl /dev/ntx_io 208 -v 0
-        #./luajit frontend/device/kobo/ntx_io.lua 208 0
-        ;;
-    "wmt")
-        echo 0 >/dev/wmtWifi
-        ;;
-    *)
-        if grep -q "^sdio_wifi_pwr " "/proc/modules"; then
-            # Handle the shitty DVFS switcheroo...
-            if [ -n "${CPUFREQ_DVFS}" ]; then
-                echo "0" >"/sys/devices/platform/mxc_dvfs_core.0/enable"
-                if [ -n "${CPUFREQ_CONSERVATIVE}" ]; then
-                    echo "conservative" >"/sys/devices/system/cpu/cpu0/cpufreq/scaling_governor"
-                else
-                    echo "userspace" >"/sys/devices/system/cpu/cpu0/cpufreq/scaling_governor"
-                    cat "/sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq" >"/sys/devices/system/cpu/cpu0/cpufreq/scaling_setspeed"
-                fi
-            fi
-            usleep 250000
-            rmmod sdio_wifi_pwr
-        fi
-
-        # Poke the kernel via ioctl on platforms without the dedicated power module...
-        if [ ! -e "/drivers/${PLATFORM}/wifi/sdio_wifi_pwr.ko" ]; then
-            usleep 250000
-            ioctl /dev/ntx_io 208 -v 0
-            #./luajit frontend/device/kobo/ntx_io.lua 208 0
-        fi
-        ;;
-esac
