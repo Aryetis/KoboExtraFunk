@@ -17,8 +17,7 @@ KoboPlatformExtra const& extraFunk = KoboPlatformExtra::Instance();
 ```
 # Thanks 
 Thanks to Rain92 for its original QPA and bearing with my questions at the time.
+
 Thanks to Quill-OS's team for their effort maintaining a modern QPA and writing an alternative OS for kobo eareaders.
+
 Thanks to Niluje for their efforts with koreader, fbink, etc and sharing part of his knowledge with me.
-
-StackEdit stores your files in your browser, which means all your files are automatically saved locally and are accessible **offline!**
-
