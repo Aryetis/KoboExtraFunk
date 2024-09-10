@@ -24,7 +24,7 @@ struct FrontlightSettings
 struct KoboDeviceExtraDescriptor
 {
     bool hasKeys = false;
-    bool canToggleChargingLED = false;
+    bool canToggleChargingLED = false; // not used (for now)
     FrontlightSettings frontlightSettings;
     // Standard sysfs path to the battery directory
     QString batterySysfs = "/sys/class/power_supply/mc13892_bat";

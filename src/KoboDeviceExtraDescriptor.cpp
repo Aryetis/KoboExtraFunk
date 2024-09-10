@@ -1,5 +1,8 @@
 #include "KoboDeviceExtraDescriptor.h"
 
+// Thanks koreader for all the hardware info :
+// https://github.com/koreader/koreader/blob/7ff40a341242abd586d2e6a49f3777465ab8950e/frontend/device/kobo/device.lua#L533
+
 // Kobo Touch A/B:
 KoboDeviceExtraDescriptor KoboTrilogyABEx
 {
@@ -189,6 +192,7 @@ KoboDeviceExtraDescriptor KoboIoEx
 // Kobo Clara 2E
 KoboDeviceExtraDescriptor KoboGoldfinchEx
 {
+    .canToggleChargingLED = true,
     .frontlightSettings
     {
         .hasNaturalLight = true,
@@ -206,6 +210,7 @@ KoboDeviceExtraDescriptor KoboGoldfinchEx
 KoboDeviceExtraDescriptor KoboMonzaEx
 {
     .hasKeys = true,
+    .canToggleChargingLED = true,
     .frontlightSettings
     {
         .hasNaturalLight = true,
@@ -217,6 +222,41 @@ KoboDeviceExtraDescriptor KoboMonzaEx
     .batterySysfs {"/sys/class/power_supply/bd71827_bat"},
     .powerDev {"/dev/input/by-path/platform-bd71828-pwrkey.6.auto-event"},
 };
+
+// Kobo Kobo Clara BW
+KoboDeviceExtraDescriptor KoboSpaBWEx
+{
+    .hasKeys = true,
+    .canToggleChargingLED = true,
+    .frontlightSettings
+    {
+        .hasNaturalLight = true,
+        .hasNaturalLightMixer = true,
+        .naturalLightInverted = true,
+        .naturalLightMin = 0,
+        .naturalLightMax = 10,
+    },
+    .batterySysfs {"/sys/class/power_supply/bd71827_bat"},
+.powerDev {"/dev/input/by-path/platform-bd71828-pwrkey.6.auto-event"}, // to be confirmed
+};
+
+// Kobo Clara Colour
+KoboDeviceExtraDescriptor KoboSpaColourEx
+{
+    .hasKeys = true,
+    .canToggleChargingLED = true,
+    .frontlightSettings
+    {
+        .hasNaturalLight = true,
+        .hasNaturalLightMixer = true,
+        .naturalLightInverted = true,
+        .naturalLightMin = 0,
+        .naturalLightMax = 10,
+    },
+    .batterySysfs {"/sys/class/power_supply/bd71827_bat"},
+.powerDev {"/dev/input/by-path/platform-bd71828-pwrkey.6.auto-event"}, // to be confirmed
+};
+
 
 KoboDeviceExtraDescriptor KoboUnknownEx {};
 
@@ -247,6 +287,8 @@ namespace
         {KoboDevice::KoboLibra2, KoboIoEx},
         {KoboDevice::KoboClara2E, KoboGoldfinchEx},
         {KoboDevice::KoboLibraColour, KoboMonzaEx},
+        {KoboDevice::KoboClaraBW, KoboSpaBWEx},
+        {KoboDevice::KoboClaraColour, KoboSpaColourEx},
         {KoboDevice::Unknown, KoboUnknownEx}
     };
 }
