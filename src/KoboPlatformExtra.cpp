@@ -56,7 +56,7 @@ void KoboPlatformExtra::DisableWiFiConnectionStatic()
     Instance().wifiManager.DisableWiFiConnection();
 }
 
-bool KoboPlatformExtra::TestInternetConnectionStatic(int timeout)
+bool KoboPlatformExtra::TestInternetConnectionStatic(int timeout/*=5*/)
 {
     return Instance().wifiManager.TestInternetConnection(timeout);
 }

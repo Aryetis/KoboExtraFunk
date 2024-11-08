@@ -24,7 +24,7 @@ public:
     static void SetFrontlightLevelStatic(int val, int temp);
     static void EnableWiFiConnectionStatic();
     static void DisableWiFiConnectionStatic();
-    static bool TestInternetConnectionStatic(int timeout);
+    static bool TestInternetConnectionStatic(int timeout=5);
     static void SetStatusLedEnabledStatic(bool enabled);
 
 private:
