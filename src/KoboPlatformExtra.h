@@ -24,8 +24,10 @@ public:
     static void SetFrontlightLevelStatic(int val, int temp);
     static void EnableWiFiConnectionStatic();
     static void DisableWiFiConnectionStatic();
+    static bool IsWifiManagerBusy();
     static bool TestInternetConnectionStatic(int timeout=5);
     static void SetStatusLedEnabledStatic(bool enabled);
+    static KoboWifiManager const& GetKoboWifiManager();
 
 private:
     KoboPlatformExtra();

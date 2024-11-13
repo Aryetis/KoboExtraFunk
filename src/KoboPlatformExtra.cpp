@@ -56,6 +56,11 @@ void KoboPlatformExtra::DisableWiFiConnectionStatic()
     Instance().wifiManager.DisableWiFiConnection();
 }
 
+bool KoboPlatformExtra::IsWifiManagerBusy()
+{
+    return Instance().wifiManager.IsBusy();
+}
+
 bool KoboPlatformExtra::TestInternetConnectionStatic(int timeout/*=5*/)
 {
     return Instance().wifiManager.TestInternetConnection(timeout);
@@ -64,4 +69,9 @@ bool KoboPlatformExtra::TestInternetConnectionStatic(int timeout/*=5*/)
 void KoboPlatformExtra::SetStatusLedEnabledStatic(bool enabled)
 {
     return  Instance().koboAdditions->SetStatusLedEnabled(enabled);
+}
+
+KoboWifiManager const& KoboPlatformExtra::GetKoboWifiManager()
+{
+    return Instance().wifiManager;
 }
