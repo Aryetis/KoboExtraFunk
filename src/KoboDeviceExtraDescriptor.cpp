@@ -211,7 +211,6 @@ KoboDeviceExtraDescriptor KoboMonzaEx
 {
     .hasKeys = true,
     .canToggleChargingLED = true,
-    .isColorScreen = true,
     .frontlightSettings
     {
         .hasNaturalLight = true,
@@ -246,7 +245,6 @@ KoboDeviceExtraDescriptor KoboSpaColourEx
 {
     .hasKeys = true,
     .canToggleChargingLED = true,
-    .isColorScreen = true,
     .frontlightSettings
     {
         .hasNaturalLight = true,
