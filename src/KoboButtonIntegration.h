@@ -6,7 +6,6 @@
 #include <qevent.h>
 #include <qguiapplication.h>
 #include <unistd.h>
-#include <QDebug>
 #include <QSocketNotifier>
 
 class KoboButtonIntegration : public QObject

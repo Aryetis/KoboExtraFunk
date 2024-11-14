@@ -3,7 +3,6 @@
 
 #include <QProcess>
 #include <QSharedPointer>
-#include <QTimer>
 
 class KoboWifiManager : public QObject
 {

@@ -1,5 +1,6 @@
 #include "KoboButtonIntegration.h"
 #include "einkenums.h"
+#include <QDebug>
 
 #define EVENT_REPEAT 2
 #define EVENT_PRESS 1
